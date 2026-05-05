@@ -160,4 +160,4 @@ This repository is provided for academic research purposes only. If used in publ
 - Curriculum learning & augmentation strategy: Implemented via the `PODNoiseAugmenter` class
 - Autoregressive prediction framework: Sliding-window guidance + recursive rolling update
 
-> **Applicable to:** CFD data-driven modeling, unsteady flow prediction, Reduced-Order Modeling (ROM), and deep learning in fluid dynamics.
+> **Applicable to:** CFD data-driven modeling, unsteady flow prediction, Reduced-Order Modeling (ROM), and deep learning in fluid dynamics. If you have any questions or require further information, please feel free to contact me via email at q_zhang@mail.nwpu.edu.cn or 2625320790@qq.com.
