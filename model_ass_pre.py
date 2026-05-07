@@ -14,7 +14,7 @@ from predict import normalize_path
 
 # ==================== 【数据增强模块】 ====================
 class PODNoiseAugmenter:
-    """POD 系数噪声增强器（支持课程学习）"""
+    """POD 系数噪声增强器（课程学习）"""
     
     def __init__(self, 
                  noise_range=(0.01, 0.02),
@@ -98,7 +98,7 @@ class PODNoiseAugmenter:
         n_original = len(X_original)
         n_augmented = n_original * augment_ratio
     
-        print(f"🔄 开始数据增强：原始 {n_original} 个样本 → 增强 {n_augmented} 个样本")
+        print(f" 开始数据增强：原始 {n_original} 个样本 → 增强 {n_augmented} 个样本")
     
         X_aug_list = [X_original.numpy()]
         Y_aug_list = [Y_original.numpy()]
@@ -119,7 +119,7 @@ class PODNoiseAugmenter:
         X_final = np.concatenate(X_aug_list, axis=0)
         Y_final = np.concatenate(Y_aug_list, axis=0)
     
-        print(f"✅ 数据增强完成！最终形状：{X_final.shape}")
+        print(f"数据增强完成！最终形状：{X_final.shape}")
     
         return torch.FloatTensor(X_final), torch.FloatTensor(Y_final)
 
@@ -249,8 +249,8 @@ if not os.path.exists(file_path):
     raise FileNotFoundError(f"数据文件未找到：{file_path}")
 
 dataSetcp = np.loadtxt(file_path).T
-print(f"✅ 归一化数据加载成功！形状：{dataSetcp.shape}")
-print(f"✅ 数据范围：[{dataSetcp.min():.4f}, {dataSetcp.max():.4f}]")
+print(f" 归一化数据加载成功！形状：{dataSetcp.shape}")
+print(f" 数据范围：[{dataSetcp.min():.4f}, {dataSetcp.max():.4f}]")
 
 dataSetall = torch.from_numpy(dataSetcp).type(torch.FloatTensor)
 
@@ -270,7 +270,7 @@ for i in range(sum_simple2):
 #X_train_original = X[0:train_simple_num_original,:,:].clone()
 #Y_train_original = Y[0:train_simple_num_original,:,:].clone()
 
-#print(f"✅ 原始 X_train 形状：{X_train_original.shape}")
+#print(f"原始 X_train 形状：{X_train_original.shape}")
 #%% ==================== 【归一化设置】 ====================
 isXnorm = 0
 isYnorm = 0
@@ -328,14 +328,14 @@ if longtimepre != 0:
     np.savetxt('./results_asspre/' + XLBB + '/' + zhuangtai + '.dat', 
                outputData2, fmt='%.15e')
     sys.exit()
-print(f"✅ 真实值范围：[{Datareal.min():.4f}, {Datareal.max():.4f}]")
-print(f"✅ 预测值范围：[{outdata2.min():.4f}, {outdata2.max():.4f}]")
+print(f" 真实值范围：[{Datareal.min():.4f}, {Datareal.max():.4f}]")
+print(f" 预测值范围：[{outdata2.min():.4f}, {outdata2.max():.4f}]")
 
 dataerror2 = Datareal - outdata2
 errorpre2 = np.sum(np.abs(dataerror2)) / np.sum(np.abs(Datareal))
 errorpre2 = round(errorpre2, 6)
-print(f"✅ 自回归预测相对误差：{errorpre2}")
-print(f"✅ 引导长度：{pre_c_num} 步")
+print(f" 自回归预测相对误差：{errorpre2}")
+print(f" 引导长度：{pre_c_num} 步")
 
 outputData2 = np.concatenate((Timedata[:,0:1], Datareal, outdata2), axis=1)
 zhuangtai='M' + Mach + '_AOA' + alpha + '_YC' + str(yanchi) + '_PCN' + str(pre_c_num) + '_e' + str(errorpre2)
@@ -343,12 +343,12 @@ np.savetxt('./results_asspre/' + XLBB + '/' + zhuangtai + '.dat',
            outputData2, fmt='%.15e')
 
 print("\n" + "="*60)
-print("✅✅✅ 训练和评估完成！✅✅✅")
+print(" 训练和评估完成！")
 print("="*60)
 
 # ==================== 【可视化：真值 vs 预测值对比 - 文件名包含 XLBB】 ====================
 print("\n" + "="*60)
-print("📊 生成预测结果对比图...")
+print("生成预测结果对比图...")
 print("="*60)
 
 try:
@@ -412,7 +412,7 @@ try:
     
     save_path = f'./results_asspre/{XLBB}/prediction_comparison_{zhuangtai}.png'
     plt.savefig(save_path, dpi=300, bbox_inches='tight')
-    print(f"✅ 对比图已保存：{save_path}")
+    print(f" 对比图已保存：{save_path}")
     
     plt.show()
     
@@ -441,8 +441,8 @@ with open(detail_file, 'w') as f:
             rel_err = abs_err / (abs(real_val) + 1e-8) * 100
             f.write(f"{i},{j+1},{real_val:.6f},{pred_val:.6f},{abs_err:.6f},{rel_err:.4f}\n")
 
-print(f"✅ 详细对比数据已保存：{detail_file}")
+print(f" 详细对比数据已保存：{detail_file}")
 
 print("\n" + "="*60)
-print("✅✅✅ 可视化对比完成！✅✅✅")
+print(" 可视化对比完成！")
 print("="*60)
